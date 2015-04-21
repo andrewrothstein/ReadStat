@@ -1,16 +1,15 @@
 
 CC=cc
 PREFIX=/usr/local
-RAGEL=/usr/local/bin/ragel
-DYLIB=obj/libreadstat.dylib
-MIN_OSX=10.7
+RAGEL=/usr/bin/ragel
+DYLIB=obj/libreadstat.so
 
 all:
 	@mkdir -p obj
 	[ -x $(RAGEL) ] && $(RAGEL) src/readstat_por_parse.rl -G2
 	[ -x $(RAGEL) ] && $(RAGEL) src/readstat_sav_parse.rl -G2
 	[ -x $(RAGEL) ] && $(RAGEL) src/readstat_spss_parse.rl -G2
-	$(CC) -g src/*.c -dynamiclib -o $(DYLIB) -llzma -lz -liconv -Wall -Wno-multichar -Werror -pedantic -mmacosx-version-min=$(MIN_OSX) -DHAVE_LZMA
+	$(CC) -Os src/*.c -rdynamic -shared -fPIC -o $(DYLIB) -llzma -lz -lm -Wall -Wno-multichar -pedantic -DHAVE_LZMA
 
 install: all
 	@mkdir -p $(PREFIX)/lib
