@@ -1624,7 +1624,11 @@ case 96:
     /* suppress warning */
     (void)spss_format_parser_en_main;
 
-    if (cs < 60 || p != eof) {
+    if (cs < 
+#line 1629 "src/readstat_spss_parse.c"
+60
+#line 90 "src/readstat_spss_parse.rl"
+ || p != eof) {
         return READSTAT_ERROR_PARSE;
     }
 
